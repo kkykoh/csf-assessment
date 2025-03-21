@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { RouteConfigLoadEnd, Router } from '@angular/router';
+import { Router } from '@angular/router';
 // import { OrderService } from '../order.service';
 import { Menu, orderItems } from '../models';
 import { HttpClient } from '@angular/common/http';
@@ -66,12 +66,33 @@ export class PlaceOrderComponent implements OnInit {
     console.log('Order Confirmed', order);
 
     this.HttpClient.post('/api/food_order', order).subscribe(
+     
+      //   (response: any) => {
+      //     console.info('Order successfully placed:', response);
+          
+      //     const orderReceipt = {
+      //       orderId: response.orderId,
+      //       paymentId: response.paymentId,
+      //       total: response.total,
+      //       timestamp: response.timestamp
+          // };
+  
+        //   this.router.navigate(['/view3'], { state: { orderReceipt } });
+        // }, 
+        // (error) => {
+        //   console.error('Error placing order:', error);
+      
       (response) => {
         console.info('order received for posting :', response)
         // to route to order confirmation if need
-        // this.router.navigate(['/view3']);
+        this.router.navigate(['/view3']);
       }, (error) => {
         console.log('error message for posting order : ', error)
+        if (error.status === 500 && error.error && error.error.message) {
+          alert(error.error.message); 
+        } else {
+          alert("An unexpected error occurred. Please try again.");
+        }
       }
     )
     

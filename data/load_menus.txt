@@ -1,3 +1,6 @@
 # TODO: Task 1.1
 
 mongoimport -d restaurant -c menus --type=json --jsonArray --file=menus.json
+
+mongoimport "mongodb://mongo:UImQgHtgRSXvXVaoyovNXLjezfgmzfCR@shortline.proxy.rlwy.net:26077/?authSource=admin&autoMechanism=SCRAM-SHA-1" -d restaurant --collection
+=menus --type=json --jsonArray --file=menus.json

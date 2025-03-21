@@ -9,7 +9,9 @@ use restaurant;
 
 create table customers (
   username varchar(64) not null,
-  password varchar(128) not null
+  password varchar(128) not null,
+  -- added a primary key constraint so that the username will be unique and can be referenced as a foreign key in the place_orders table
+  constraint pk_username PRIMARY KEY(username) 
 );
 
 insert into customers(username, password) values
@@ -26,7 +28,11 @@ create table place_orders (
   order_id char(8) not null, 
   payment_id varchar(128) unique not null, 
   order_date Date not null, 
-  total decimal not null, 
-  username not null, 
-  constraint fk_username FOREIGN KEY(username) references customers(username)
+  total decimal(10,2) not null, 
+  username varchar(64) not null, 
+  constraint pk_order_id PRIMARY KEY(order_id),
+  constraint fk_username FOREIGN KEY(username) references customers(username),
+  constraint chk_total CHECK (total <= 999999.99)
 )
+
+
